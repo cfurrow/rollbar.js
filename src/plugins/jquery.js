@@ -6,7 +6,7 @@
   }
   
   var _rollbarParams = {
-    "notifier.plugins.jquery.version": '0.0.6'
+    "notifier.plugins.jquery.version": '0.0.7'
   };
   window._rollbar.push({_rollbarParams: _rollbarParams});
   
@@ -22,15 +22,19 @@
     var url = ajaxSettings.url;
     var type = ajaxSettings.type;
     
-    window._rollbar.push({
-      level: 'warning',
-      msg: 'jQuery ajax error for ' + type + ' ' + url,
-      jquery_status: status,
-      jquery_url: url,
-      jquery_type: type,
-      jquery_thrown_error: thrownError,
-      jquery_ajax_error: true
-    });
+    // Only report errors that have a status. Status code 0 means the user most
+    // likely canceled an AJAX request by browsing away from the page.
+    if (status) {
+      window._rollbar.push({
+        level: 'warning',
+        msg: 'jQuery ajax error for ' + type + ' ' + url,
+        jquery_status: status,
+        jquery_url: url,
+        jquery_type: type,
+        jquery_thrown_error: thrownError,
+        jquery_ajax_error: true
+      });
+    }
   });
   
   // Wraps functions passed into jQuery's ready() with try/catch to
