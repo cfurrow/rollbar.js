@@ -221,6 +221,4 @@ var defaultRollbarJsUrl = '//d37gvrvc0wt4s1.cloudfront.net/js/v1.0/rollbar.min.j
 _rollbarConfig.rollbarJsUrl = _rollbarConfig.rollbarJsUrl || defaultRollbarJsUrl;
 var r = Rollbar.init(window, _rollbarConfig);
 r.loadFull(window, document, false, _rollbarConfig);
-
-r.loadFull(window, document, false, _rollbarConfig);
 })(window, document);
